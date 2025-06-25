@@ -41,7 +41,7 @@
 
       <button type="submit" class="btn-primary">Registrarse</button>
     </form>
-    <p>¿Ya tienes una cuenta? <a href="inicio-sesion.html">Inicia sesión</a></p>
+    <p>¿Ya tienes una cuenta? <a href="login.html">Inicia sesión</a></p>
   </div>
 
   <script>
@@ -60,7 +60,7 @@
         const BASE_URL = window.location.hostname === "localhost"
         ? "http://localhost:8080"
         : "https://habity-backend.up.railway.app";
-        
+
         const response = await fetch(`${BASE_URL}/api/auth/register`, {
           method: "POST",
           headers: {
