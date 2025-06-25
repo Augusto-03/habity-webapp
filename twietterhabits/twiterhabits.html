@@ -75,7 +75,10 @@
         const token = localStorage.getItem("token");
 
         async function cargarPublicaciones() {
-            const res = await fetch("http://localhost:8080/api/publicaciones", {
+            const BASE_URL = window.location.hostname === "localhost"
+            ? "http://localhost:8080"
+            : "https://habity-backend.up.railway.app";
+            const res = await fetch(`${BASE_URL}/api/publicaciones`, {
                 headers: { "Authorization": "Bearer " + token }
             });
             const publicaciones = await res.json();
@@ -84,13 +87,13 @@
             container.innerHTML = "";
 
             for (const pub of publicaciones) {
-                const likes = await fetch(`http://localhost:8080/api/publicaciones/${pub.id}/likes`, {
+                const likes = await fetch(`${BASE_URL}/api/publicaciones/${pub.id}/likes`, {
                     headers: {
                         "Authorization": "Bearer " + localStorage.getItem("token")
                     }
                 }).then(r => r.json());
 
-                const dislikes = await fetch(`http://localhost:8080/api/publicaciones/${pub.id}/dislikes`, {
+                const dislikes = await fetch(`${BASE_URL}/api/publicaciones/${pub.id}/dislikes`, {
                     headers: {
                         "Authorization": "Bearer " + localStorage.getItem("token")
                     }
@@ -108,7 +111,10 @@
             }
         }
         function reaccionar(id, esLike) {
-            fetch(`http://localhost:8080/api/publicaciones/${id}/reaccion?like=${esLike}`, {
+            const BASE_URL = window.location.hostname === "localhost"
+            ? "http://localhost:8080"
+            : "https://habity-backend.up.railway.app";
+            fetch(`${BASE_URL}/api/publicaciones/${id}/reaccion?like=${esLike}`, {
                 method: "PUT",
                 headers: {
                     "Authorization": "Bearer " + token
@@ -119,8 +125,11 @@
         async function publicar() {
             const contenido = document.getElementById("contenido").value.trim();
             if (!contenido) return alert("Escribe algo antes de publicar.");
-
-            const res = await fetch("http://localhost:8080/api/publicaciones", {
+            
+            const BASE_URL = window.location.hostname === "localhost"
+            ? "http://localhost:8080"
+            : "https://habity-backend.up.railway.app";
+            const res = await fetch(`${BASE_URL}/api/publicaciones`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

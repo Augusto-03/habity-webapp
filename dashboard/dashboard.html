@@ -404,7 +404,12 @@
 <script>
   async function cargarPerfil() {
     const token = localStorage.getItem('token');
-    const res = await fetch("http://localhost:8080/api/usuarios/perfilObtener", {
+    
+    const BASE_URL = window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://habity-backend.up.railway.app";
+        
+    const res = await fetch(`${BASE_URL}/api/usuarios/perfilObtener`, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
     if (res.ok) {
@@ -435,7 +440,11 @@
 
     // === CARGAR HÁBITOS Y MOSTRAR CON TRACKERS ===
     function cargarHabitos() {
-      fetch('http://localhost:8080/api/habitos', { headers })
+      const BASE_URL = window.location.hostname === "localhost"
+      ? "http://localhost:8080"
+      : "https://habity-backend.up.railway.app";
+        
+      fetch(`${BASE_URL}/api/habitos`, { headers })
         .then(res => res.json())
         .then(habitos => {
           const contenedor = document.querySelector('.dashboard-cards');
@@ -487,7 +496,12 @@
 
             console.log(`➡️ Enviando PUT a: /api/habitos/${habito.id}/registro/${fechaStr}`);
 
-            fetch(`http://localhost:8080/api/habitos/${habito.id}/registro/${fechaStr}`, {
+            
+            const BASE_URL = window.location.hostname === "localhost"
+            ? "http://localhost:8080"
+            : "https://habity-backend.up.railway.app";
+
+            fetch(`${BASE_URL}/api/habitos/${habito.id}/registro/${fechaStr}`, {
               method: "PUT",
               headers: {
                 'Authorization': 'Bearer ' + token,
@@ -563,7 +577,11 @@
     }
     window.eliminarHabito = function (id) {
       if (confirm("¿Eliminar este hábito?")) {
-        fetch(`http://localhost:8080/api/habitos/${id}`, {
+        const BASE_URL = window.location.hostname === "localhost"
+        ? "http://localhost:8080"
+        : "https://habity-backend.up.railway.app";
+        
+        fetch(`${BASE_URL}/api/habitos/${id}`, {
           method: 'DELETE',
           headers
         }).then(cargarHabitos);
@@ -574,7 +592,11 @@
       const nuevoNombre = prompt("Nuevo nombre:");
       const nuevaDescripcion = prompt("Nueva descripción:");
       if (nuevoNombre && nuevaDescripcion) {
-        fetch(`http://localhost:8080/api/habitos/${id}`, {
+        const BASE_URL = window.location.hostname === "localhost"
+        ? "http://localhost:8080"
+        : "https://habity-backend.up.railway.app";
+        
+        fetch(`${BASE_URL}/api/habitos/${id}`, {
           method: 'PUT',
           headers,
           body: JSON.stringify({ nombre: nuevoNombre, descripcion: nuevaDescripcion })
@@ -608,7 +630,12 @@
     const altura = document.getElementById("edit-altura").value;
     const imagenUrl = document.getElementById("edit-imagenUrl").value;
 
-    const response = await fetch("http://localhost:8080/api/usuarios/perfilActualizar", {
+    
+    const BASE_URL = window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://habity-backend.up.railway.app";
+    
+    const response = await fetch(`${BASE_URL}/api/usuarios/perfilActualizar`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -638,7 +665,11 @@
       imagenUrl: document.getElementById("imagen-url-input").value
     };
 
-    const res = await fetch("http://localhost:8080/api/usuarios/perfil", {
+    const BASE_URL = window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://habity-backend.up.railway.app";
+    
+    const res = await fetch(`${BASE_URL}/api/usuarios/perfil`, {
       method: "PUT",
       headers: {
         "Authorization": "Bearer " + token,

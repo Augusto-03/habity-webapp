@@ -17,7 +17,11 @@
         return window.location.href = "../register/login.html";
       }
   
-      const response = await fetch("http://localhost:8080/api/habitos", {
+      const BASE_URL = window.location.hostname === "localhost"
+      ? "http://localhost:8080"
+      : "https://habity-backend.up.railway.app";
+      
+      const response = await fetch(`${BASE_URL}/api/habitos`, {
         headers: {
           "Authorization": "Bearer " + token
         }
